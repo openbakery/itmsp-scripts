@@ -199,18 +199,6 @@ def replaceScreenshots(element, images, target, locale, version)
 
   end
   
-  #screenShotsElement = getElement(element, "software_screenshots");
-  #screenShotsElement.each {|shot| 
-  #  puts shot
-  #}
-  
-  
-  #<software_screenshot display_target="iOS-iPad" position="5">
-  #    <size>384591</size>
-  #    <file_name>IMG_0331.PNG</file_name>
-  #    <checksum type="md5">d2975455ca3ce98238c0c0a6fddecbe7</checksum>
-  #</software_screenshot>
-  
   
   puts images
 end
