@@ -93,7 +93,11 @@ def getElementValue(element, name)
   return result
 end
 
-
+if (ARGV.length < 1)
+  puts "Usage itmsExtract.rb <my." + PACKAGE_EXTENSION + ">"
+  puts "e.g itmsExtract.rb my." + PACKAGE_EXTENSION
+  exit
+end
 
 xmlDocument = getXMLDocument()
 

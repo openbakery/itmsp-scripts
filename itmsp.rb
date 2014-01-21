@@ -31,8 +31,7 @@ end
 
 def getXMLDocument
   if (ARGV.length < 1)
-    puts "Usage " + File.basename($0) + " <my." + PACKAGE_EXTENSION + ">"
-    puts "e.g " + File.basename($0) + " my." + PACKAGE_EXTENSION
+    puts "packageFile name is missing"
     exit
   end
   

@@ -214,6 +214,11 @@ def getElement(element, name)
   return result
 end
 
+if (ARGV.length < 1)
+  puts "Usage itmsUpdate.rb <my." + PACKAGE_EXTENSION + ">"
+  puts "e.g itmsUpdate.rb my." + PACKAGE_EXTENSION
+  exit
+end
 
 xmlDocument = getXMLDocument()
 
