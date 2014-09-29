@@ -3,7 +3,7 @@
 
 require 'fileutils'
 require 'fastimage'
-require_relative 'itmsp.rb'
+require_relative 'itms.rb'
 
 
 def processVersion(element)
@@ -46,25 +46,12 @@ def processLocale(element, version)
     end
   end
 
-  if (info[:title]) 
-    getElement(element, "title").text = info[:title]
-  end
-  
-  if (info[:description]) 
-    getElement(element, "description").text = info[:description]
-  end
+  setElementValue(element, "title", info[:title]);
+  setElementValue(element, "description", info[:description]); 
+  setElementValue(element, "version_whats_new", info[:whats_new]); 
+  setElementValue(element, "software_url", info[:software_url]); 
+  setElementValue(element, "support_url", info[:support_url]); 
 
-  if (info[:whats_new]) 
-    getElement(element, "version_whats_new").text = info[:whats_new]
-  end
-
-  if (info[:software_url]) 
-    getElement(element, "software_url").text = info[:software_url]
-  end
-
-  if (info[:support_url]) 
-    getElement(element, "support_url").text = info[:support_url]
-  end
 
   if (info[:keywords])
     keywords = getElement(element, "keywords");
@@ -132,7 +119,7 @@ def processScreenshots(element, locale, version)
     [1536, 2048]
   ]
   
-  iPhoneSizes = [
+  iPhone3_5Sizes = [
     [640, 920], 
     [640, 960], 
     [960, 600], 
@@ -146,14 +133,31 @@ def processScreenshots(element, locale, version)
     [1136, 640]
   ]
 
+  iPhone4_7inchSizes = [
+    [1334, 750],
+    [750, 1334]
+  ]
+  
+
+  iPhone5_5inchSizes = [
+    [2208, 1242],
+    [1242, 2208]
+  ]
+
   images = getScreenshots(version, locale, "iPad", iPadSizes)
   replaceScreenshots(element, images, "iOS-iPad", locale, version)
   
-  images = getScreenshots(version, locale, "iPhone", iPhoneSizes)
+  images = getScreenshots(version, locale, "iPhone-3.5inch", iPhone3_5Sizes)
   replaceScreenshots(element, images, "iOS-3.5-in", locale, version)
 
   images = getScreenshots(version, locale, "iPhone-4inch", iPhone4inchSizes)
   replaceScreenshots(element, images, "iOS-4-in", locale, version)
+
+  images = getScreenshots(version, locale, "iPhone-4.7inch", iPhone4_7inchSizes)
+  replaceScreenshots(element, images, "iOS-4.7-in", locale, version)
+
+  images = getScreenshots(version, locale, "iPhone-5.5inch", iPhone5_5inchSizes)
+  replaceScreenshots(element, images, "iOS-5.5-in", locale, version)
   
 end
 
@@ -199,15 +203,47 @@ def replaceScreenshots(element, images, target, locale, version)
 
   end
   
+  #screenShotsElement = getElement(element, "software_screenshots");
+  #screenShotsElement.each {|shot| 
+  #  puts shot
+  #}
+  
+  
+  #<software_screenshot display_target="iOS-iPad" position="5">
+  #    <size>384591</size>
+  #    <file_name>IMG_0331.PNG</file_name>
+  #    <checksum type="md5">d2975455ca3ce98238c0c0a6fddecbe7</checksum>
+  #</software_screenshot>
+  
   
   puts images
 end
   
 
-
+def setElementValue(rootElement, name, value) 
+  if (value == nil)
+    return;
+  end
+  
+  element = getElement(rootElement, name);
+  
+  if (element == nil)
+    puts "create element for #{name}"
+    
+    element = REXML::Element.new name
+    rootElement.add_element element
+    
+  end
+  element.text = value
+end
 
 def getElement(element, name)
   result = nil;
+  
+  if (element == nil)
+    return nil;
+  end
+  
   element.each_element(name) { |childElement| 
     result = childElement
   }

@@ -2,7 +2,7 @@
 # coding: utf-8
 
 require 'fileutils'
-require_relative 'itmsp.rb'
+require_relative 'itms.rb'
 
 
 
@@ -78,9 +78,11 @@ def processLocal(element, version)
   # create screenshots directory
   
   FileUtils.mkdir_p File.join(localDirectory, "iPad")
-  FileUtils.mkdir_p File.join(localDirectory, "iPhone")
+  FileUtils.mkdir_p File.join(localDirectory, "iPhone-3.5inch")
   FileUtils.mkdir_p File.join(localDirectory, "iPhone-4inch")
-  
+  FileUtils.mkdir_p File.join(localDirectory, "iPhone-4.7inch")
+  FileUtils.mkdir_p File.join(localDirectory, "iPhone-5.5inch")
+
   
 end
 
