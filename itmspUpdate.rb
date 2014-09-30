@@ -146,7 +146,7 @@ def processScreenshots(element, locale, version)
 
   images = getScreenshots(version, locale, "iPad", iPadSizes)
   replaceScreenshots(element, images, "iOS-iPad", locale, version)
-  
+
   images = getScreenshots(version, locale, "iPhone-3.5inch", iPhone3_5Sizes)
   replaceScreenshots(element, images, "iOS-3.5-in", locale, version)
 
@@ -168,12 +168,13 @@ def replaceScreenshots(element, images, target, locale, version)
   end
 
   screenshots = getElement(element, "software_screenshots");
+  puts "screenshots: #{screenshots}"
   screenshots.each_element{|screenshot| 
     if (screenshot.attributes["display_target"] == target)
       screenshots.delete_element(screenshot)
     end
   }
-  
+
 
   images.to_enum.with_index(1).each do |image, index|
     screenshot = REXML::Element.new 'software_screenshot'
@@ -200,7 +201,6 @@ def replaceScreenshots(element, images, target, locale, version)
     
     
     screenshots.add_element screenshot
-
   end
   
   #screenShotsElement = getElement(element, "software_screenshots");
@@ -216,7 +216,6 @@ def replaceScreenshots(element, images, target, locale, version)
   #</software_screenshot>
   
   
-  puts images
 end
   
 
@@ -251,8 +250,8 @@ def getElement(element, name)
 end
 
 if (ARGV.length < 1)
-  puts "Usage itmsUpdate.rb <my." + PACKAGE_EXTENSION + ">"
-  puts "e.g itmsUpdate.rb my." + PACKAGE_EXTENSION
+  puts "Usage itmspUpdate.rb <my." + PACKAGE_EXTENSION + ">"
+  puts "e.g itmspUpdate.rb my." + PACKAGE_EXTENSION
   exit
 end
 

@@ -2,7 +2,7 @@
 # coding: utf-8
 
 require 'fileutils'
-require_relative 'itms.rb'
+require_relative 'itmsp.rb'
 
 
 
