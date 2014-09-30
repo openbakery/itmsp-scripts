@@ -3,13 +3,14 @@
 
 require 'fileutils'
 require 'fastimage'
-require_relative 'itms.rb'
+require_relative 'itmsp.rb'
 
 
 def processVersion(element)
   version = element.attributes["string"]
   
   element.each_element("locales/locale") { |localeElement|
+    puts "process version: #{version}"
     processLocale(localeElement, version)
   }
 end
@@ -163,17 +164,17 @@ end
 
 def replaceScreenshots(element, images, target, locale, version)
 
-  if (images.size == 0) 
-    return
-  end
 
   screenshots = getElement(element, "software_screenshots");
-  puts "screenshots: #{screenshots}"
   screenshots.each_element{|screenshot| 
     if (screenshot.attributes["display_target"] == target)
       screenshots.delete_element(screenshot)
     end
   }
+
+  if (images.size == 0) 
+    return
+  end
 
 
   images.to_enum.with_index(1).each do |image, index|
